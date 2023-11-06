@@ -1,0 +1,78 @@
+:root 
+{
+    --main-text-color: rgb(232, 224, 224);
+    --main-bg-color: #262626;
+    --accent-bg-color: #383631;
+    --darker-bg-color: #1a1a1a;
+    --darker-transparent-bg-color: #1a1a1aa1;
+    --accent-color: #F54D4D;
+    --text-shadow-color: rgba(0, 0, 1.0);
+}
+
+body
+{
+    font-family: 'Open Sans','Helvetica Neue','Helvetica','Arial','sans-serif';
+    background-color: #262626;
+    color: var(--main-text-color);
+    margin: 1rem;
+}
+
+main
+{
+    max-width: 48em;
+    margin-inline: auto;
+    text-align: center;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+h1
+{
+    color: var(--accent-color)
+}
+
+h1,h2,h3,p
+{
+    margin: 0;
+    padding: 0
+}
+
+.guessLine
+{
+    display: grid;
+    gap: 1rem;
+
+    grid-template-columns: 1fr auto;
+}
+
+input, button
+{
+    min-height: 2rem;
+    border-radius: 5px;
+}
+
+.responseContainer
+{
+    max-height: 31rem;
+    overflow-y: auto;
+    background-color: var(--main-bg-color);
+
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.responseContainer > p
+{
+    padding-block: 1rem;
+    margin-inline: 1rem;
+    margin-block: 0;
+    border-radius: 10px;
+}
+
+.responseContainer :nth-child(odd) 
+{
+    background-color: var(--accent-bg-color);
+}
