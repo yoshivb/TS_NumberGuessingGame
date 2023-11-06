@@ -1,3 +1,14 @@
+import InvalidGuessResponses from "./invalid_responses.json"
+
+enum InvalidGuessReponseType
+{
+	GameOver = 0,
+	NotANumber,
+	Infinite,
+	LessThan1,
+	MoreThan100
+}
+
 class NumberGuessingGame
 {
 	private inputField: HTMLInputElement | null;
@@ -7,6 +18,8 @@ class NumberGuessingGame
 	private guessAmount: number = 0;
 
 	private gameFinished: boolean = false;
+
+	private invalidGuessTypeCount: { [type: number]: number} = {};
 
 	constructor()
 	{
@@ -58,7 +71,7 @@ class NumberGuessingGame
 
 		if(this.gameFinished)
 		{
-			this.guessResponse("The game is over, silly!");
+			this.invalidGuessResponse(InvalidGuessReponseType.GameOver);
 			return;
 		}
 
@@ -68,25 +81,25 @@ class NumberGuessingGame
 
 		if(Number.isNaN(guessNumber))
 		{
-			this.guessResponse("That's not a number!");
+			this.invalidGuessResponse(InvalidGuessReponseType.NotANumber);
 			return;
 		}
 
 		if(!Number.isFinite(guessNumber))
 		{
-			this.guessResponse("Infinite is definitely too much!");
+			this.invalidGuessResponse(InvalidGuessReponseType.Infinite);
 			return;
 		}
 
 		if(guessNumber < 1)
 		{
-			this.guessResponse("That guess is smaller than allowed!");
+			this.invalidGuessResponse(InvalidGuessReponseType.LessThan1);
 			return;
 		}
 
 		if(guessNumber > 100)
 		{
-			this.guessResponse("That guess is bigger than allowed!");
+			this.invalidGuessResponse(InvalidGuessReponseType.MoreThan100);
 			return;
 		}
 
@@ -112,7 +125,7 @@ class NumberGuessingGame
 		}
 	}
 
-	private guessResponse(response: string, guessCounts: boolean = false)
+	private guessResponse(response: string, validGuess: boolean = false)
 	{
 		if(!this.responseContainer)
 		{
@@ -121,12 +134,27 @@ class NumberGuessingGame
 
 		let responseElement = document.createElement("p");
 		responseElement.textContent = response;
-		if(guessCounts)
+		if(validGuess)
 		{
 			responseElement.textContent += ` You've got ${this.guessAmount} guesses left.`;
 		}
 
 		this.responseContainer.insertBefore(responseElement, this.responseContainer.firstChild);
+	}
+
+	private invalidGuessResponse(type: InvalidGuessReponseType)
+	{
+		let guessType = InvalidGuessReponseType[type];
+
+		if(this.invalidGuessTypeCount[type] === undefined)
+		{
+			this.invalidGuessTypeCount[type] = 0;
+		}
+
+		let guessResponseArray: string[] = (InvalidGuessResponses as any)[guessType];
+		this.guessResponse(guessResponseArray[this.invalidGuessTypeCount[type] % guessResponseArray.length]);
+
+		this.invalidGuessTypeCount[type]++;
 	}
 
 	private finishGame(hasWon: boolean)

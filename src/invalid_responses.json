@@ -1,0 +1,27 @@
+{
+	"GameOver": [
+		"The game is over, silly!",
+		"Yeh it's definitely over.",
+		"Okay you can stop now.",
+		"This is no longer funny.",
+		"Go home, the party is over!"
+	],
+	"NotANumber": [
+		"That's not a number!",
+		"Yup still not a number!",
+		"That's also very much not a number."
+	],
+	"Infinite": [
+		"Infinite is definitely too much!"
+	],
+	"LessThan1": [
+		"That guess is smaller than allowed!",
+		"Could you maybe guess a bit higher, you know, in the 1 to 100 range?",
+		"You really don't like shooting high do you?"
+	],
+	"MoreThan100": [
+		"That guess is bigger than allowed!",
+		"Could you maybe guess a bit lower, you know, in the 1 to 100 range?",
+		"Okay could you maybe guess just a smidge lower than that?"
+	]
+}
