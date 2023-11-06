@@ -6,15 +6,11 @@ on:
 
 jobs:
   build:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
 
     permissions:
       contents: 'read'
       id-token: 'write'
-      pages: 'write'
 
     steps:
     - uses: actions/checkout@v3
@@ -34,3 +30,16 @@ jobs:
       with:
         path: build/
         
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      pages: 'write'
+
+    steps:  
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2
